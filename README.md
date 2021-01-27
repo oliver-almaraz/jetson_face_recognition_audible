@@ -7,6 +7,7 @@ Both hardware and software **requirements** are the same as my [other project's]
 
 ## Installing dependencies
 Installing the dependencies is really easy, but it will take a while (more than an hour in the Jetson Nano), since some packages must be compiled from source.
+
 *Note: I assume you already have your Jetson Nano up and running with Jetpack, and that there's a camera connected to it.*
 
 First of all, let's install the system dependencies (if you followed my food_container_identifier project, you already have `python3-pip`, `cmake` and `espeak` installed):
@@ -16,7 +17,7 @@ $ sudo apt update
 $ sudo apt install python3-pip cmake espeak libopenblas-dev liblapack-dev libjpeg-dev
 ```
 
-Then the Python dependencies (will take a while):
+Then the Python dependencies (this one will take a while):
 ```
 $ sudo -H pip3 -v install Cython face_recognition opencv-python pyttsx3
 ```
@@ -79,7 +80,7 @@ def get_jetson_gstreamer_source(capture_width=1280, capture_height=720, display_
 
 video_capture = cv2.VideoCapture(get_jetson_gstreamer_source(), cv2.CAP_GSTREAMER)
 ```
-*Note: I took the get_jetson_gstreamer_source function from another [**ageitgey example**](https://gist.githubusercontent.com/ageitgey/e60d74a0afa3e8c801cff3f98c2a64d3/raw/a49b405ccbf3d4884df2947f30094dad9f4ef8da/doorbell_camera_2gb.py)*
+*Note: I took the `get_jetson_gstreamer_source()` function from another [**ageitgey example**](https://gist.githubusercontent.com/ageitgey/e60d74a0afa3e8c801cff3f98c2a64d3/raw/a49b405ccbf3d4884df2947f30094dad9f4ef8da/doorbell_camera_2gb.py)*
 
 Next, we need to add some **known faces** so that they can be recognized. Save one picture of every face with the name of the person on it on a directory (I suggest it be the same directory as the Python script). There must be only one face per picture. Keep a trace of that directory's path.
 
