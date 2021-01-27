@@ -9,16 +9,68 @@ Also both hardware and software **requirements** are the same as my [other proje
 Installing the dependencies is really easy, but it will take a while (more than an hour in the Jetson Nano), since some packages must be compiled from source.
 *Note: I assume you already have your Jetson Nano up and running with Jetpack, and that there's a camera conected to it.
 
-First of all, lests install the system dependencies (if you followed my food_container_identifier project, you already have `python3-pip` and `cmake` installed):
+First of all, lests install the system dependencies (if you followed my food_container_identifier project, you already have `python3-pip`, `cmake` and `espeak` installed):
 
 ```
 $ sudo apt update
-$ sudo apt install python3-pip cmake libopenblas-dev liblapack-dev libjpeg-dev
+$ sudo apt install python3-pip cmake espeak libopenblas-dev liblapack-dev libjpeg-dev
 ```
 
 Then the Python dependencies (will take a while):
 ```
-sudo -H pip3 -v install Cython face_recognition opencv-python
+$ sudo -H pip3 -v install Cython face_recognition opencv-python pyttsx3
 ```
 
 ## Editing the Python script
+I took **ageigey's example** and made some changes to fit our hardware and purpose. Basically, like in the food_container_identifier project, I added the speech description features and removed the code related to a visual output.
+
+First, we import and initialize the voice synthetizer's engine:
+```
+##############################################
+# FOR SPEECH DESCRIPTION OF IDENTIFIED FACES #
+##############################################
+
+# Import text-to-speech Python library
+import pyttsx3
+
+# Initialize the pyttsx3 engine
+engine = pyttsx3.init()
+
+# Set speech rate (higer = faster)
+engine.setProperty('rate', 100)
+
+# OPTIONAL Set voice
+#voices = engine.getProperty('voices')
+#engine.setProperty('voice', voices[1].id)
+```
+
+Then, we must select a video input source. I'm using the Raspberry Pi V2.1 MIPI CSI cam, so I'm using the second option and commented the first one:
+```
+##################################
+# SELECT VIDEO SOURCE (JUST ONE) #
+##################################
+
+
+# Capture video from standard webcam #0 (UNCOMMENT ONLY NEXT LINE)
+# video_capture = cv2.VideoCapture(0)
+
+
+# Capture video from MIPI CSI camera connected to the Jetson Nano (UNCOMMENT NEXT 13 LINES)
+# IF YOUR VIDEO IS UPSIDE DOWN, USE THE flip_method TO 2
+def get_jetson_gstreamer_source(capture_width=1280, capture_height=720, display_width=1280, display_$
+    """
+    Return an OpenCV-compatible video source description that uses gstreamer to capture video from t$
+    """
+    return (
+            f'nvarguscamerasrc ! video/x-raw(memory:NVMM), ' +
+            f'width=(int){capture_width}, height=(int){capture_height}, ' +
+            f'format=(string)NV12, framerate=(fraction){framerate}/1 ! ' +
+            f'nvvidconv flip-method={flip_method} ! ' +
+            f'video/x-raw, width=(int){display_width}, height=(int){display_height}, format=(string)$
+            'videoconvert ! video/x-raw, format=(string)BGR ! appsink'
+            )
+
+video_capture = cv2.VideoCapture(get_jetson_gstreamer_source(), cv2.CAP_GSTREAMER)
+```
+*Note: I took the get_jetson_gstreamer_source function from another [**ageitgey example**](https://gist.githubusercontent.com/ageitgey/e60d74a0afa3e8c801cff3f98c2a64d3/raw/a49b405ccbf3d4884df2947f30094dad9f4ef8da/doorbell_camera_2gb.py)
+
