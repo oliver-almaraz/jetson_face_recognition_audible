@@ -83,21 +83,21 @@ video_capture = cv2.VideoCapture(get_jetson_gstreamer_source(), cv2.CAP_GSTREAME
 
 Next, we need to add some **known faces** so that they can be recognized. Save one picture of every face with the name of the person on it on a directory (I suggest it be the same directory as the Python script). There must be only one face per picture. Keep a trace of that directory's path.
 
-In the Python script, lets create objets for our known faces:
+In the Python script, let's create objets for our known faces:
 ```python
 ############################################
-# ADD PATHS TO JPG IMAGES OF "KNOWN FACES" #
-# YOU WOULD LIKE TO RECOGNIZE.             #
+# ADD PATHS TO JPG OR JPEG IMAGES OF       #
+# KNOWN FACES YOU WOULD LIKE TO RECOGNIZE. #            #
 # BE CAREFUL TO EDIT THE NAME OF THAT FACE #
 # EVERY TIME IT APPEARS AS:                #
 # NAME_image                               #
 # NAME_face_encodings                      #
 ############################################
 
-elvis_image = face_recognition.load_image_file("elvis.jpg")
+elvis_image = face_recognition.load_image_file("elvis.jpeg")
 elvis_face_encoding = face_recognition.face_encodings(elvis_image)[0]
 
-churchill_image = face_recognition.load_image_file("churchill.jpg")
+churchill_image = face_recognition.load_image_file("churchill.jpeg")
 churchill_face_encoding = face_recognition.face_encodings(churchill_image)[0]
 ```
 
@@ -136,7 +136,7 @@ And finally, after making Python recognize the known faces (or an unknown one) w
                 engine.runAndWait()
 ```
 ## That's it!
-We can now test our program running:
+We can now test our program running (it will take a minute to load):
 ```
 $ python3 ~/jetson_face_recognition_audible/jetson_face_recognition_audible.py
 ```
