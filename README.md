@@ -3,11 +3,11 @@ Following my last project, the [Food Container Identifier](https://github.com/ol
 
 If you want to know more about **why it is useful**, please consult my other project's [introduction](https://github.com/oliver-almaraz/food_container_identifier/blob/main/README.md#introduction).
 
-Also both hardware and software **requirements** are the same as my [other project's](https://github.com/oliver-almaraz/food_container_identifier/blob/main/README.md#requirements).
+Both hardware and software **requirements** are the same as my [other project's](https://github.com/oliver-almaraz/food_container_identifier/blob/main/README.md#requirements).
 
 ## Installing dependencies
 Installing the dependencies is really easy, but it will take a while (more than an hour in the Jetson Nano), since some packages must be compiled from source.
-*Note: I assume you already have your Jetson Nano up and running with Jetpack, and that there's a camera conected to it.*
+*Note: I assume you already have your Jetson Nano up and running with Jetpack, and that there's a camera connected to it.*
 
 First of all, let's install the system dependencies (if you followed my food_container_identifier project, you already have `python3-pip`, `cmake` and `espeak` installed):
 
@@ -24,7 +24,7 @@ $ sudo -H pip3 -v install Cython face_recognition opencv-python pyttsx3
 ## Editing the Python script
 I took [**ageigey's example**](https://github.com/ageitgey/face_recognition/blob/master/examples/facerec_from_webcam_faster.py) and made some changes to fit our hardware and purpose. Basically, like in the food_container_identifier project, I added the speech description features and removed the code related to a visual output.
 
-First, we import and initialize the voice synthetizer's engine:
+First, we import and initialize the voice synthesizer's engine:
 ```python
 ##############################################
 # FOR SPEECH DESCRIPTION OF IDENTIFIED FACES #
@@ -44,7 +44,7 @@ engine = pyttsx3.init()
 #engine.setProperty('voice', voices[1].id)
 ```
 
-Let's be courteus and add audible instruction for exiting the program, like in foot_container_identifier:
+Let's be courteous and add audible instruction for exiting the program, like in foot_container_identifier:
 ```python
 engine.setProperty('rate', 200)
 engine.say("Welcome, for exiting this program please keep pressing for two seconds the keyboard keys 'control' and 'c'")
@@ -83,7 +83,7 @@ video_capture = cv2.VideoCapture(get_jetson_gstreamer_source(), cv2.CAP_GSTREAME
 
 Next, we need to add some **known faces** so that they can be recognized. Save one picture of every face with the name of the person on it on a directory (I suggest it be the same directory as the Python script). There must be only one face per picture. Keep a trace of that directory's path.
 
-In the Python script, let's create objets for our known faces:
+In the Python script, let's create objects for our known faces:
 ```python
 ############################################
 # ADD PATHS TO JPG OR JPEG IMAGES OF       #
@@ -125,7 +125,7 @@ known_face_names = [
 ]
 ```
 
-And finally, after making Python recognize the known faces (or an unknown one) when the appear in the video live feed, we pass it's name to the voice engine:
+And finally, after making Python recognize the known faces (or an unknown one) when they appear in the video live feed, we pass it's name to the voice engine:
 ```python
 ###################################################
 # PASS THE RECOGNIZED FACE'S NAME TO PYTTSX3      #
