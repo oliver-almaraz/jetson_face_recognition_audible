@@ -1,5 +1,5 @@
 # Real-time face recognition with audible (speech) output for Nvidia's Jetson Nano.
-Following my last project, the [Food Container Identifier](https://github.com/oliver-almaraz/food_container_identifier), in which I used the Jetson Nano and the software tools provided by [dusty-nv](https://github.com/dusty-nv/jetson-inference) for making a speech descriptor of food containers, I now will use [**ageitgey's** face_recognition](https://github.com/dusty-nv/jetson-inference) Python library for doing almost the same, but with human faces.
+Following my last project, the [Food Container Identifier](https://github.com/oliver-almaraz/food_container_identifier), in which I used the Jetson Nano and the software tools provided by [dusty-nv](https://github.com/dusty-nv/jetson-inference) for making a speech descriptor of food containers, I now will use [**ageitgey's** face_recognition](https://github.com/dusty-nv/jetson-inference) Python library (that relies on OpenCV and Dlib) for doing almost the same, but with human faces.
 
 If you want to know more about **why it is useful**, please consult my other project's [introduction](https://github.com/oliver-almaraz/food_container_identifier/blob/main/README.md#introduction).
 
