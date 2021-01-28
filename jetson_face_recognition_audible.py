@@ -28,9 +28,9 @@ engine = pyttsx3.init()
 #engine.setProperty('voice', voices[1].id)
 
 
-####################################
-# AUDIBLE INSTRUCTIONS FOR EXITING #
-#################################### 
+################################################
+# AUDIO FEEDBACKTO KNOW SOMETHING IS HAPPENING #
+################################################
 
 engine.setProperty('rate', 250)
 engine.say("Loading, please wait a minute")
