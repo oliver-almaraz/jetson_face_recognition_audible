@@ -28,9 +28,9 @@ engine = pyttsx3.init()
 #engine.setProperty('voice', voices[1].id)
 
 
-################################################
-# AUDIO FEEDBACKTO KNOW SOMETHING IS HAPPENING #
-################################################
+#################################################
+# AUDIO FEEDBACK TO KNOW SOMETHING IS HAPPENING #
+#################################################
 
 engine.setProperty('rate', 250)
 engine.say("Loading, please wait a minute")
@@ -91,7 +91,7 @@ known_face_encodings = [
 ####################################
 # ADD THE NAME YOU WANT TO BE READ #
 # FOR EVERY KNOWN FACE ENCODING    #
-# (FOLLOW THE SAME ORDER)		   #
+# (FOLLOW THE SAME ORDER)          #
 ####################################
 known_face_names = [
 	"Elvis Presley",
@@ -105,7 +105,6 @@ known_face_names = [
 engine.say("Program ready, for exiting please keep pressing for two seconds the keyboard keys control and c")
 engine.runAndWait()
 engine.setProperty('rate', 100)
-
 
 
 while True:
