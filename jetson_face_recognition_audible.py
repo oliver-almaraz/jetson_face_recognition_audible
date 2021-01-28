@@ -27,14 +27,14 @@ engine = pyttsx3.init()
 #voices = engine.getProperty('voices')
 #engine.setProperty('voice', voices[1].id)
 
+
 ####################################
 # AUDIBLE INSTRUCTIONS FOR EXITING #
 #################################### 
 
-engine.setProperty('rate', 200)
-engine.say("Welcome, for exiting this program please keep pressing for two seconds the keyboard keys 'control' and 'c'")
-engine.setProperty('rate', 100)
-
+engine.setProperty('rate', 250)
+engine.say("Loading, please wait a minute")
+engine.runAndWait()
 
 ##################################
 # SELECT VIDEO SOURCE (JUST ONE) #
@@ -47,7 +47,7 @@ engine.setProperty('rate', 100)
 
 # Capture video from MIPI CSI camera connected to the Jetson Nano (UNCOMMENT NEXT 13 LINES)
 # IF YOUR VIDEO IS UPSIDE DOWN, SET THE flip_method TO 2
-def get_jetson_gstreamer_source(capture_width=1280, capture_height=720, display_width=1280, display_height=720, framerate=5, flip_method=2):
+def get_jetson_gstreamer_source(capture_width=1280, capture_height=720, display_width=1280, display_height=720, framerate=1, flip_method=2):
     """
     Return an OpenCV-compatible video source description that uses gstreamer to capture video from the RPI camera on a Jetson Nano
     """
@@ -72,10 +72,10 @@ video_capture = cv2.VideoCapture(get_jetson_gstreamer_source(), cv2.CAP_GSTREAME
 # NAME_face_encodings                      #
 ############################################
 
-elvis_image = face_recognition.load_image_file("elvis.jpg")
+elvis_image = face_recognition.load_image_file("elvis.jpeg")
 elvis_face_encoding = face_recognition.face_encodings(elvis_image)[0]
 
-churchill_image = face_recognition.load_image_file("churchill.jpg")
+churchill_image = face_recognition.load_image_file("churchill.jpeg")
 churchill_face_encoding = face_recognition.face_encodings(churchill_image)[0]
 
 
@@ -98,13 +98,23 @@ known_face_names = [
 	"Winston Churchill"
 ]
 
-# Initialize some variables
-face_locations = []
-face_encodings = []
-face_names = []
-process_this_frame = True
+####################################
+# AUDIBLE INSTRUCTIONS FOR EXITING #
+####################################
+
+engine.say("Program ready, for exiting please keep pressing for two seconds the keyboard keys control and c")
+engine.runAndWait()
+engine.setProperty('rate', 100)
+
+
 
 while True:
+
+    # Initialize some local variables we must clean in every loop
+	face_locations = []
+	face_encodings = []
+	face_names = []
+
     # Grab a single frame of video
 	ret, frame = video_capture.read()
 
@@ -119,7 +129,9 @@ while True:
 	face_locations = face_recognition.face_locations(rgb_small_frame)
 	face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
-	face_names = []
+	# A SET SO THAT NO NAME WILL BE REPEATED
+	face_names = set()
+
 	for face_encoding in face_encodings:
 		# See if the face is a match for the known face(s)
 		matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
@@ -131,13 +143,15 @@ while True:
 		if matches[best_match_index]:
 			name = known_face_names[best_match_index]
 
-		face_names.append(name)
+		face_names.add(name)
 
 ###################################################
 # PASS THE RECOGNIZED FACE'S NAME TO PYTTSX3      #
 # AND START THE VOICE SYNTH, WAIT UNTIL IT'S DONE #
 ###################################################
-	for (top, right, bottom, left), name in zip(face_locations, face_names):
+	for name in face_names:
 		engine.say(name)
 		engine.runAndWait()
+		
+	face_names.clear()
 
