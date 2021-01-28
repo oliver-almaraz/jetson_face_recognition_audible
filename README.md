@@ -147,7 +147,7 @@ And finally, after making Python recognize the known faces (or an unknown one) w
 # PASS THE RECOGNIZED FACE'S NAME TO PYTTSX3      #
 # AND START THE VOICE SYNTH, WAIT UNTIL IT'S DONE #
 ###################################################
-        for (top, right, bottom, left), name in zip(face_locations, face_names):
+        for name in face_names:
                 engine.say(name)
                 engine.runAndWait()
 ```
