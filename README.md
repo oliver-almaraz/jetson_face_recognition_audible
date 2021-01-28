@@ -45,10 +45,25 @@ engine = pyttsx3.init()
 #engine.setProperty('voice', voices[1].id)
 ```
 
-Let's be courteous and add audible instruction for exiting the program, like in foot_container_identifier:
+Let's be courteous and add audible feedback and instructions for exiting the program, like in **foot_container_identifier**:
 ```python
-engine.setProperty('rate', 200)
-engine.say("Welcome, for exiting this program please keep pressing for two seconds the keyboard keys 'control' and 'c'")
+#################################################
+# AUDIO FEEDBACK TO KNOW SOMETHING IS HAPPENING #
+#################################################
+
+engine.setProperty('rate', 250)
+engine.say("Loading, please wait a minute")
+engine.runAndWait()
+```
+And just before the loop starts:
+
+```python
+####################################
+# AUDIBLE INSTRUCTIONS FOR EXITING #
+####################################
+
+engine.say("Program ready, for exiting please keep pressing for two seconds the keyboard keys control and c")
+engine.runAndWait()
 engine.setProperty('rate', 100)
 ```
 
@@ -88,7 +103,7 @@ In the Python script, let's create objects for our known faces:
 ```python
 ############################################
 # ADD PATHS TO JPG OR JPEG IMAGES OF       #
-# KNOWN FACES YOU WOULD LIKE TO RECOGNIZE. #            #
+# KNOWN FACES YOU WOULD LIKE TO RECOGNIZE. #
 # BE CAREFUL TO EDIT THE NAME OF THAT FACE #
 # EVERY TIME IT APPEARS AS:                #
 # NAME_image                               #
@@ -118,7 +133,7 @@ known_face_encodings = [
 ####################################
 # ADD THE NAME YOU WANT TO BE READ #
 # FOR EVERY KNOWN FACE ENCODING    #
-# (FOLLOW THE SAME ORDER)                  #
+# (FOLLOW THE SAME ORDER)          #
 ####################################
 known_face_names = [
         "Elvis Presley",
